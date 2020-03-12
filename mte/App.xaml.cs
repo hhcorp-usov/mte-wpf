@@ -1,5 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
-using mte.Models;
+using mteModels.Models;
 using mte.ViewModels;
 using mte.Views;
 using Prism;
@@ -81,7 +81,7 @@ namespace mte
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-
+            moduleCatalog.AddModule<mteGuides.mteGuidesModule>();
         }
     }
 }

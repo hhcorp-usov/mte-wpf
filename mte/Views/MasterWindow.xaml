@@ -12,42 +12,45 @@
     WindowStartupLocation="CenterScreen"
     MinWidth="1024" MinHeight="768"
     Width="1024" Height="768"
-    Title="Управление АТП"
     >
 
     <Controls:MetroWindow.LeftWindowCommands>
-        <Controls:WindowCommands VerticalAlignment="Center" HorizontalAlignment="Center">
-            <iconPacks:PackIconMaterial Width="16" Height="16" Kind="BusMarker" Margin="5"/>
+        <Controls:WindowCommands>
+            <StackPanel Margin="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <iconPacks:PackIconMaterial Width="20" Height="20" Kind="BusMarker"/>
+                <TextBlock Text="MTE" Margin="5 0" FontSize="16"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5 0">
+                <RadioButton Content="Главная" GroupName="MainMenu" Command="{Binding SwitchApplicationModeCommand}" CommandParameter="DefaultPage" Style="{StaticResource ToolBarButtonBaseStyle}" IsChecked="True" Cursor="Hand" Width="100"/>
+                <RadioButton Content="Справочники" GroupName="MainMenu" Command="{Binding SwitchApplicationModeCommand}" CommandParameter="DefaultGuidesPage" Style="{StaticResource ToolBarButtonBaseStyle}" Cursor="Hand" Width="100"/>
+                <RadioButton Content="Документы" GroupName="MainMenu" Command="{Binding SwitchApplicationModeCommand}" CommandParameter="DefaultDocumentsPage" Style="{StaticResource ToolBarButtonBaseStyle}" Cursor="Hand" Width="100"/>
+                <RadioButton Content="Отчеты" GroupName="MainMenu" Command="{Binding SwitchApplicationModeCommand}" CommandParameter="DefaultReportsPage" Style="{StaticResource ToolBarButtonBaseStyle}" Cursor="Hand" Width="100"/>
+            </StackPanel>
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
+    
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button>
+            <Button Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Width="16" Height="16" Kind="AccountBox"/>
                     <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="{Binding CurrentSessionUserView}" />
-                    <Popup>
-                        <StackPanel>
-                            <Button Content="Logout"/>
-                        </StackPanel>
-                    </Popup>
                 </StackPanel>
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
 
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
+        <ContentControl prism:RegionManager.RegionName="ContentRegion"/>
+        
         <StatusBar Grid.Row="1" Grid.ColumnSpan="2"></StatusBar>
+
+        <ContentControl prism:RegionManager.RegionName="PopupRegion"/>
     </Grid>
-    
+
 </Controls:MetroWindow>

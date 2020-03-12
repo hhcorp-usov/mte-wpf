@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mte.Models
+namespace mteModels.Models
 {
     public interface IDataList
     {
@@ -17,6 +17,7 @@ namespace mte.Models
         public DbSet<Users> Users { get; set; }
         public DbSet<Enterprises> Enterprises { get; set; }
         public DbSet<Posts> Posts { get; set; }
+        public DbSet<Workers> Workers { get; set; }
 
         public DatabaseContext(string DatabaseConnectionString) : base(DatabaseConnectionString)
         {

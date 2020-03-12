@@ -4,6 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29827.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mte", "mte\mte.csproj", "{3059E2FC-4DE1-4F46-85DD-73534A5190E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{138459D2-D773-46C2-B35F-C52519051E82} = {138459D2-D773-46C2-B35F-C52519051E82}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mteModels", "mteClasses\mteModels.csproj", "{ADEA0EE7-C749-44E2-B5D9-030B33383854}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mteGuides", "mteGuides\mteGuides.csproj", "{138459D2-D773-46C2-B35F-C52519051E82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +22,14 @@ Global
 		{3059E2FC-4DE1-4F46-85DD-73534A5190E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3059E2FC-4DE1-4F46-85DD-73534A5190E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3059E2FC-4DE1-4F46-85DD-73534A5190E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADEA0EE7-C749-44E2-B5D9-030B33383854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADEA0EE7-C749-44E2-B5D9-030B33383854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADEA0EE7-C749-44E2-B5D9-030B33383854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADEA0EE7-C749-44E2-B5D9-030B33383854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{138459D2-D773-46C2-B35F-C52519051E82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{138459D2-D773-46C2-B35F-C52519051E82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{138459D2-D773-46C2-B35F-C52519051E82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{138459D2-D773-46C2-B35F-C52519051E82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

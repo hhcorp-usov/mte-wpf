@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mte.Models
+namespace mteModels.Models
 {
     public class Enterprises : IDataList
     {

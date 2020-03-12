@@ -5,17 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mte.Models
+namespace mteModels.Models
 {
-    public class Users : IDataList
+    public class Posts : IDataList
     {
         [Key]
         public int Id { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
         public string Name { get; set; }
-        public int PostsId { get; set; }
-
-        public virtual Posts Posts { get; set; }
     }
 }
