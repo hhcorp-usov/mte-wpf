@@ -75,7 +75,8 @@
                 </Button>
             </ToolBar>
 
-            <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding GuidesDataItems}" SelectedItem="{Binding GuidesDataSelectedItems, Mode=TwoWay}" AutoGenerateColumns="True" />
+            <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding GuidesDataItems}" SelectedItem="{Binding GuidesDataSelectedItems, Mode=TwoWay}" AutoGenerateColumns="True" 
+                      IsReadOnly="True"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1,15 +1,18 @@
-﻿using mteModels.Models;
+﻿using ControlzEx.Standard;
+using mteModels.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-
+using System.Windows.Media.Effects;
 
 namespace mteGuides.ViewModels
 {
-    public class DefaultGuidesPageViewModel : BindableBase
+    public class DefaultGuidesPageViewModel : BindableBase, INotifyPropertyChanged
     {
         private MenuNavigatorItem _guidesMenuSelectedItem;
         public MenuNavigatorItem GuidesMenuSelectedItem
@@ -58,18 +61,53 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> GuidesDeleteItemCommand { get; set; }
         private void GuidesAddItem(object SelectedItem)
         {
-            _currentRegionManager.RequestNavigate("PopupRegion", "GuidesEnterprises");
+            DialogParameters param = new DialogParameters();
+            switch (GuidesMenuSelectedItem.Id) 
+            {
+                case "enterprises":
+                    param.Add("Item", SelectedItem);
+                    _currentDialogService.ShowDialog("GuidesEnterprises", param, r =>
+                    {
+                        if (r.Result == ButtonResult.OK)
+                        {
+                            GuidesDataItems = CurrentSession.GetGuidesDataForDataGrid(GuidesMenuSelectedItem.Id);
+                        }
+                    });
+                    break;
+
+                case "posts":
+                    param.Add("Item", SelectedItem);
+                    _currentDialogService.ShowDialog("GuidesPosts", param, r =>
+                    {
+                        if (r.Result == ButtonResult.OK)
+                        {
+                            GuidesDataItems = CurrentSession.GetGuidesDataForDataGrid(GuidesMenuSelectedItem.Id);
+                        }
+                    });
+                    break;
+
+                case "workers":
+                    param.Add("Item", SelectedItem);
+                    _currentDialogService.ShowDialog("GuidesWorkers", param, r =>
+                    {
+                        if (r.Result == ButtonResult.OK)
+                        {
+                            GuidesDataItems = CurrentSession.GetGuidesDataForDataGrid(GuidesMenuSelectedItem.Id);
+                        }
+                    });
+                    break;
+            }
         }
+
         private void GuidesDeleteItem(object SelectedItem)
         {
-            
         }
 
-        private readonly IRegionManager _currentRegionManager;
+        private readonly IDialogService _currentDialogService;
 
-        public DefaultGuidesPageViewModel(IRegionManager RegionManager)
+        public DefaultGuidesPageViewModel(IDialogService DialogService)
         {
-            _currentRegionManager = RegionManager;
+            _currentDialogService = DialogService;
             GuidesMenuNavigatorSelectedItemCommand = new DelegateCommand<object>(GuidesMenuNavigatorSelectedItem);
             GuidesAddItemCommand = new DelegateCommand<object>(GuidesAddItem);
             GuidesDeleteItemCommand = new DelegateCommand<object>(GuidesDeleteItem);

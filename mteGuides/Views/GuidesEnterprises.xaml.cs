@@ -11,6 +11,7 @@ namespace mteGuides.Views
         public GuidesEnterprises()
         {
             InitializeComponent();
+            this.EnterprisesName.Focus();
         }
     }
 }

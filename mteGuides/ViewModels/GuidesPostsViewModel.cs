@@ -1,31 +1,24 @@
-﻿using Prism.Commands;
+﻿using mteModels.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using mteModels.Models;
-using Prism.Services.Dialogs;
 using System.Data.Entity;
+using System.Linq;
 
 namespace mteGuides.ViewModels
 {
-    public class GuidesEnterprisesViewModel : BindableBase, IDialogAware
+    public class GuidesPostsViewModel : BindableBase, IDialogAware
     {
-        private int _enteprisesId;
+        private int _postsId;
 
-        private string _enterprisesName;
-        public string EnterprisesName
+        private string _postsName;
+        public string PostsName
         {
-            get { return _enterprisesName; }
-            set { SetProperty(ref (_enterprisesName), value); }
-        }
-
-        private string _enterprisesInn;
-        public string EnterprisesInn
-        {
-            get { return _enterprisesInn; }
-            set { SetProperty(ref (_enterprisesInn), value); }
+            get { return _postsName; }
+            set { SetProperty(ref (_postsName), value); }
         }
 
         public DelegateCommand<object> CloseGuidesPopupCommand { get; set; }
@@ -37,49 +30,39 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            Enterprises item = new Enterprises();
-            //IDialogParameters param = new IDialogParameters();
-
-            //item.SaveChanges(param);
-
-
-
-            if (_enteprisesId > 0)
+            if (_postsId > 0)
             {
-                var Item = CurrentSession._dbContext.Enterprises.Where(w => w.Id == _enteprisesId).FirstOrDefault();
-                Item.Inn = EnterprisesInn;
-                Item.Name = EnterprisesName;
+                var Item = CurrentSession._dbContext.Posts.Where(w => w.Id == _postsId).FirstOrDefault();
+                Item.Name = PostsName;
                 CurrentSession._dbContext.Entry(Item).State = EntityState.Modified;
             }
             else
             {
-                Enterprises Item = new Enterprises()
+                Posts Item = new Posts()
                 {
-                    Inn = _enterprisesInn, 
-                    Name = _enterprisesName
+                    Name = _postsName
                 };
-                CurrentSession._dbContext.Enterprises.Add(Item);
+                CurrentSession._dbContext.Posts.Add(Item);
             }
             CurrentSession._dbContext.SaveChanges();
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
 
-        public bool CanCloseDialog() 
+        public bool CanCloseDialog()
         {
             return true;
         }
 
-        public void OnDialogClosed() {}
+        public void OnDialogClosed() { }
         public void OnDialogOpened(IDialogParameters parameters)
         {
             if (parameters.Count > 0)
             {
-                var value = parameters.GetValue<Enterprises>("Item");
+                var value = parameters.GetValue<Posts>("Item");
                 if (value != null)
                 {
-                    _enteprisesId = value.Id;
-                    EnterprisesName = value.Name;
-                    EnterprisesInn = value.Inn;
+                    _postsId = value.Id;
+                    PostsName = value.Name;
                 }
             }
         }
@@ -98,9 +81,9 @@ namespace mteGuides.ViewModels
             set { SetProperty(ref (_title), value); }
         }
 
-        public GuidesEnterprisesViewModel(IRegionManager RegionManager)
+        public GuidesPostsViewModel(IRegionManager RegionManager)
         {
-            Title = "Организация";
+            Title = "Должность";
             ApplyGuidesPopupCommand = new DelegateCommand<object>(ApplyGuidesPopup);
             CloseGuidesPopupCommand = new DelegateCommand<object>(CloseGuidesPopup);
         }

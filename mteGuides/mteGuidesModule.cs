@@ -16,7 +16,9 @@ namespace mteGuides
         {
             containerRegistry.RegisterForNavigation<DefaultGuidesPage>();
             //
-            containerRegistry.RegisterForNavigation<GuidesEnterprises>();
+            containerRegistry.RegisterDialog<GuidesEnterprises>();
+            containerRegistry.RegisterDialog<GuidesPosts>();
+            containerRegistry.RegisterDialog<GuidesWorkers>();
         }
     }
 }

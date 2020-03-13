@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using Prism.Common;
+using Prism.Regions;
+using System.Windows.Controls;
 
 namespace mteGuides.Views
 {

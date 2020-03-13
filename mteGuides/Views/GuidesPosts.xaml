@@ -1,5 +1,5 @@
 ﻿<UserControl 
-    x:Class="mteGuides.Views.GuidesEnterprises"
+    x:Class="mteGuides.Views.GuidesPosts"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prism="http://prismlibrary.com/"
@@ -22,9 +22,7 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Margin="10 20">
                     <Label Content="Наименование"/>
-                    <TextBox x:Name="EnterprisesName" Text="{Binding EnterprisesName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="ИНН"/>
-                    <TextBox Text="{Binding EnterprisesInn, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="PostsName" Text="{Binding PostsName, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <Grid Background="{StaticResource AccentColorBrush3}">
                     <StackPanel Orientation="Vertical">

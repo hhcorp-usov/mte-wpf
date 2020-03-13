@@ -4,11 +4,12 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace mte.ViewModels
 {
-    public class MasterWindowViewModel : BindableBase
+    public class MasterWindowViewModel : BindableBase, INotifyPropertyChanged
     {
         private readonly IRegionManager CurrentRegionManager;
 

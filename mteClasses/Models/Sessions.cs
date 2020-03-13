@@ -51,5 +51,15 @@ namespace mteModels.Models
         {
             return _dbContext.Users.OrderBy(o => o.Name).ToList();
         }
+
+        public static List<Enterprises> GetEnterprisesList()
+        {
+            return _dbContext.Enterprises.OrderBy(o => o.Name).ToList();
+        }
+
+        public static List<Posts> GetPostsList()
+        {
+            return _dbContext.Posts.OrderBy(o => o.Name).ToList();
+        }
     }
 }
