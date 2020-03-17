@@ -33,7 +33,7 @@ namespace mte
 
                 // db connect
                 splashScreenForm.SplashScreenText("Соединение с базой данных ...");
-                CurrentSession.DatabaseConnect();
+                SessionsHelper.DatabaseConnect();
 
                 /*
                 // login form
@@ -50,9 +50,9 @@ namespace mte
                 });
                 */
 
-                CurrentSession.CurrentUser = CurrentSession.GetUsersList().First();
+                SessionsHelper.CurrentUser = SessionsHelper.GetUsersList().First();
 
-                if (CurrentSession.CurrentUser != null)
+                if (SessionsHelper.CurrentUser != null)
                 {
                     // empty
                     splashScreenForm.SplashScreenText("Применение параметров ...");

@@ -28,9 +28,9 @@
                     <ComboBox ItemsSource="{Binding PostsList}" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedValue="{Binding WorkersPostsId}"/>
                     
                     <Label Content="Фамилия"/>
-                    <TextBox Text="{Binding WorkersName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Имя"/>
                     <TextBox Text="{Binding WorkersFirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Имя"/>
+                    <TextBox Text="{Binding WorkersName, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Отчество"/>
                     <TextBox Text="{Binding WorkersLastName, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>

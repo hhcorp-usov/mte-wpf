@@ -1,19 +1,22 @@
 ﻿using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace mteModels.Models
 {
-    public static class CurrentSession
+    public static class SessionsHelper
     {
         // database context
-        public static DatabaseContext _dbContext;
+        private static DatabaseContext _dbContext;
         public static void DatabaseConnect() { _dbContext = new DatabaseContext(mteModels.Properties.Resources.DatabaseConnectionString); }
 
         public static Users CurrentUser;
@@ -23,25 +26,49 @@ namespace mteModels.Models
             else return "None";
         }
 
-        public static IReadOnlyList<IDataList> GetGuidesDataForDataGrid(string GuidesName)
+        public static IReadOnlyList<IDataList> GetDataGridGuidesItems(GuidesElements GuidesName)
         {
             IReadOnlyList<IDataList> res = null;
-            switch (GuidesName.ToLower().Trim())
+            switch (GuidesName)
             {
-                case "enterprises":
-                    res = _dbContext.Enterprises.OrderBy(o => o.Id).ToList();
+                case GuidesElements.Enterprises:
+                    res = EnterprisesHelper.GetDataGridItems(_dbContext);
                     break;
 
-                case "posts":
-                    res = _dbContext.Posts.OrderBy(o=>o.Id).ToList();
+                case GuidesElements.Posts:
+                    res = PostsHelper.GetDataGridItems(_dbContext);
                     break;
 
-                case "workers":
-                    res = _dbContext.Workers.OrderBy(o => o.Id).ToList();
+                case GuidesElements.Workers:
+                    res = WorkersHelper.GetDataGridItems(_dbContext);
                     break;
 
-                case "users":
-                    res = _dbContext.Users.OrderBy(o => o.Id).ToList();
+                case GuidesElements.Users:
+                    res = UsersHelper.GetDataGridItems(_dbContext);
+                    break;
+            }
+            return res;
+        }
+
+        public static ObservableCollection<DataGridColumn> GetDataGridGuidesColumns(GuidesElements GuidesName)
+        {
+            ObservableCollection<DataGridColumn> res = new ObservableCollection<DataGridColumn>();
+            switch (GuidesName)
+            {
+                case GuidesElements.Enterprises:
+                    res = EnterprisesHelper.GetDataGridColumns();
+                    break;
+
+                case GuidesElements.Posts:
+                    res = PostsHelper.GetDataGridColumns();
+                    break;
+
+                case GuidesElements.Workers:
+                    res = WorkersHelper.GetDataGridColumns(); 
+                    break;
+
+                case GuidesElements.Users:
+                    res = UsersHelper.GetDataGridColumns(); 
                     break;
             }
             return res;
@@ -60,6 +87,47 @@ namespace mteModels.Models
         public static List<Posts> GetPostsList()
         {
             return _dbContext.Posts.OrderBy(o => o.Name).ToList();
+        }
+
+        public static int EnterprisesSaveChanges(Enterprises item)
+        {
+            if (item.Id > 0)
+            {
+                Enterprises _item = _dbContext.Enterprises.Where(w => w.Id == item.Id).SingleOrDefault();
+                _item.Inn = item.Inn;
+                _item.Name = item.Name;
+                _dbContext.Entry(_item).State = EntityState.Modified;
+            }
+            else _dbContext.Enterprises.Add(item);
+            return _dbContext.SaveChanges();
+        }
+
+        public static int PostsSaveChanges(Posts item)
+        {
+            if (item.Id > 0)
+            {
+                Posts _item = _dbContext.Posts.Where(w => w.Id == item.Id).SingleOrDefault();
+                _item.Name = item.Name;
+                _dbContext.Entry(_item).State = EntityState.Modified;
+            }
+            else _dbContext.Posts.Add(item);
+            return _dbContext.SaveChanges();
+        }
+
+        public static int WorkersSaveChanges(Workers item)
+        {
+            if (item.Id > 0)
+            {
+                Workers _item = _dbContext.Workers.Where(w => w.Id == item.Id).SingleOrDefault();
+                _item.Name = item.Name;
+                _item.EnterprisesId = item.EnterprisesId;
+                _item.PostsId = item.PostsId;
+                _item.FirstName = item.FirstName;
+                _item.LastName = item.LastName;
+                _dbContext.Entry(_item).State = EntityState.Modified;
+            }
+            else _dbContext.Workers.Add(item);
+            return _dbContext.SaveChanges();
         }
     }
 }

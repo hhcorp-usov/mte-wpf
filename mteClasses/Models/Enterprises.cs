@@ -1,13 +1,10 @@
-﻿using Prism.Services.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
-using System.Data.Entity.Migrations.History;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace mteModels.Models
 {
@@ -17,24 +14,22 @@ namespace mteModels.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Inn { get; set; }
+    }
 
-        public int SaveChanges(IDialogParameters Parameters) 
+    public static class EnterprisesHelper 
+    {
+        public static ObservableCollection<DataGridColumn> GetDataGridColumns() 
         {
-            if (Parameters.Count > 0)
-            {
-                Enterprises _item = Parameters.GetValue<Enterprises>("Item");
-                
-                this.Id = _item.Id;
-                this.Inn = _item.Inn;
-                this.Name = _item.Name;
+            ObservableCollection<DataGridColumn> res = new ObservableCollection<DataGridColumn>();
+            res.Add(new DataGridTextColumn() { Header = "ID", Width = 50, Binding = new Binding() { Path = new PropertyPath("Id") } });
+            res.Add(new DataGridTextColumn() { Header = "NAME", Width = new DataGridLength(100, DataGridLengthUnitType.Star), Binding = new Binding() { Path = new PropertyPath("Name") } });
+            res.Add(new DataGridTextColumn() { Header = "INN", Width = 100, Binding = new Binding() { Path = new PropertyPath("Inn") } } );
+            return res;
+        }
 
-                if (this.Id > 0) CurrentSession._dbContext.Entry(this).State = EntityState.Modified;
-                else CurrentSession._dbContext.Enterprises.Add(this);
-                
-                return CurrentSession._dbContext.SaveChanges();
-            }
-            else
-                return -1;
+        public static IReadOnlyList<IDataList> GetDataGridItems(DatabaseContext _dbContext)
+        {
+            return _dbContext.Enterprises.OrderBy(o => o.Id).ToList();
         }
     }
 }

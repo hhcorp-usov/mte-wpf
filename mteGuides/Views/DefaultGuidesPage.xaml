@@ -1,5 +1,6 @@
 ﻿<UserControl 
     x:Class="mteGuides.Views.DefaultGuidesPage"
+    
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:prism="http://prismlibrary.com/"
@@ -7,6 +8,8 @@
     xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:mteModels.Models;assembly=mteModels"
+    xmlns:bh="clr-namespace:mteModels.Models;assembly=mteModels"    
+    
     prism:ViewModelLocator.AutoWireViewModel="True"
     MinWidth="800" MinHeight="600">
 
@@ -26,7 +29,11 @@
             <TextBlock Grid.Row="0" Text="Справочники" Margin="10 0" FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentSelectedColorBrush}" VerticalAlignment="Center"/>
         </Border>
 
-        <ListView Grid.Row="1" BorderThickness="0" ItemsSource="{DynamicResource ResourceKey=GuidesMenuItems}" SelectedItem="{Binding GuidesMenuSelectedItem, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch">
+        <ListView 
+            Grid.Row="1" BorderThickness="0" 
+            ItemsSource="{DynamicResource ResourceKey=GuidesMenuItems}" 
+            SelectedItem="{Binding GuidesMenuSelectedItem, UpdateSourceTrigger=PropertyChanged}" 
+            VerticalAlignment="Stretch">
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
@@ -36,7 +43,7 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Cursor="Hand">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition/>
@@ -49,11 +56,11 @@
 
             <ListView.Resources>
                 <col:ArrayList x:Key="GuidesMenuItems">
-                    <local:MenuNavigatorItem Id="enterprises" Text="Организации" Icon="domain"/>
-                    <local:MenuNavigatorItem Id="posts" Text="Должности" Icon="accountgroupoutline"/>
-                    <local:MenuNavigatorItem Id="workers" Text="Сотрудники" Icon="accountcogoutline"/>
+                    <local:MenuNavigatorItem Id="Enterprises" Text="Организации" Icon="domain"/>
+                    <local:MenuNavigatorItem Id="Posts" Text="Должности" Icon="accountgroupoutline"/>
+                    <local:MenuNavigatorItem Id="Workers" Text="Сотрудники" Icon="accountcogoutline"/>
 
-                    <local:MenuNavigatorItem Id="users" Text="Пользователи" Icon="accountkeyoutline"/>
+                    <local:MenuNavigatorItem Id="Users" Text="Пользователи" Icon="accountkeyoutline"/>
                 </col:ArrayList>
             </ListView.Resources>
 
@@ -65,18 +72,41 @@
             <TextBlock Text="{Binding GuidesName}" Margin="10 0" FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentSelectedColorBrush}" VerticalAlignment="Center"/>
         </Border>
 
-        <StackPanel Grid.Row="1" Grid.Column="2">
-            <ToolBar VerticalAlignment="top" Margin="0 0 0 10">
-                <Button Command="{Binding GuidesAddItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}">
-                    <iconPacks:PackIconMaterial Kind="Plus" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <ToolBar Grid.Row="0" Margin="0 5">
+                <Button Command="{Binding GuidesAddItemCommand}">
+                    <iconPacks:PackIconMaterial Kind="FileOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
+                </Button>
+                <Button Command="{Binding GuidesEditItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}">
+                    <iconPacks:PackIconMaterial Kind="FileEditOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
                 </Button>
                 <Button Command="{Binding GuidesDeleteItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}">
-                    <iconPacks:PackIconMaterial Kind="Minus" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
+                    <iconPacks:PackIconMaterial Kind="TrashCanOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
                 </Button>
             </ToolBar>
 
-            <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding GuidesDataItems}" SelectedItem="{Binding GuidesDataSelectedItems, Mode=TwoWay}" AutoGenerateColumns="True" 
-                      IsReadOnly="True"/>
-        </StackPanel>
+            <DataGrid 
+                Grid.Row="1" SelectionMode="Single"
+                Margin="5 0" BorderThickness="0"
+                ItemsSource="{Binding GuidesDataItems}" 
+                SelectedItem="{Binding GuidesDataSelectedItems, Mode=TwoWay}" 
+                AutoGenerateColumns="False" IsReadOnly="True"
+                Style="{StaticResource AzureDataGrid}"                
+                >
+
+                <i:Interaction.Behaviors>
+                    <bh:ColumnsBindingBehaviour Columns="{Binding DataGridColumns}"/>
+                </i:Interaction.Behaviors>
+                
+                <DataGrid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding GuidesEditItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}"/>
+                </DataGrid.InputBindings>
+            </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>

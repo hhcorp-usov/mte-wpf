@@ -49,6 +49,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ColumnsBindingBehaviour.cs" />
     <Compile Include="Models\DatabaseContext.cs" />
     <Compile Include="Models\Enterprises.cs" />
     <Compile Include="Models\Navigations.cs" />

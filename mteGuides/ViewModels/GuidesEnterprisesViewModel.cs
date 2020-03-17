@@ -37,39 +37,21 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            Enterprises item = new Enterprises();
-            //IDialogParameters param = new IDialogParameters();
-
-            //item.SaveChanges(param);
-
-
-
-            if (_enteprisesId > 0)
+            int sres = SessionsHelper.EnterprisesSaveChanges(new Enterprises()
             {
-                var Item = CurrentSession._dbContext.Enterprises.Where(w => w.Id == _enteprisesId).FirstOrDefault();
-                Item.Inn = EnterprisesInn;
-                Item.Name = EnterprisesName;
-                CurrentSession._dbContext.Entry(Item).State = EntityState.Modified;
-            }
-            else
-            {
-                Enterprises Item = new Enterprises()
-                {
-                    Inn = _enterprisesInn, 
-                    Name = _enterprisesName
-                };
-                CurrentSession._dbContext.Enterprises.Add(Item);
-            }
-            CurrentSession._dbContext.SaveChanges();
-            RaiseRequestClose(new DialogResult(ButtonResult.OK));
+                Id = _enteprisesId,
+                Inn = EnterprisesInn,
+                Name = EnterprisesName
+            });
+            RaiseRequestClose(new DialogResult(sres > 0 ? ButtonResult.OK : ButtonResult.No));
         }
 
-        public bool CanCloseDialog() 
+        public bool CanCloseDialog()
         {
             return true;
         }
 
-        public void OnDialogClosed() {}
+        public void OnDialogClosed() { }
         public void OnDialogOpened(IDialogParameters parameters)
         {
             if (parameters.Count > 0)

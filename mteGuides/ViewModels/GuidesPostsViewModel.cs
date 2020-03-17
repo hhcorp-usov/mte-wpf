@@ -30,22 +30,12 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            if (_postsId > 0)
+            int sres = SessionsHelper.PostsSaveChanges(new Posts()
             {
-                var Item = CurrentSession._dbContext.Posts.Where(w => w.Id == _postsId).FirstOrDefault();
-                Item.Name = PostsName;
-                CurrentSession._dbContext.Entry(Item).State = EntityState.Modified;
-            }
-            else
-            {
-                Posts Item = new Posts()
-                {
-                    Name = _postsName
-                };
-                CurrentSession._dbContext.Posts.Add(Item);
-            }
-            CurrentSession._dbContext.SaveChanges();
-            RaiseRequestClose(new DialogResult(ButtonResult.OK));
+                Id = _postsId,
+                Name = PostsName
+            });
+            RaiseRequestClose(new DialogResult(sres > 0 ? ButtonResult.OK : ButtonResult.No));
         }
 
         public bool CanCloseDialog()

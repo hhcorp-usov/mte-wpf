@@ -65,14 +65,14 @@ namespace mte.ViewModels
             string pwd_input = SHA512((parameter[1] as PasswordBox).Password + (parameter[0] as Users).Login);
             if (pwd_etalon == pwd_input & parameter[0] is Users)
             {
-                CurrentSession.CurrentUser = (parameter[0] as Users);
+                SessionsHelper.CurrentUser = (parameter[0] as Users);
                 OnRequestClose(this, new EventArgs());
             }
         }
 
         private void ButtonCancel(object parm)
         {
-            CurrentSession.CurrentUser = null;
+            SessionsHelper.CurrentUser = null;
             OnRequestClose(this, new EventArgs());
         }
 
@@ -82,7 +82,7 @@ namespace mte.ViewModels
             ButtonCancelCommand = new DelegateCommand<object>(ButtonCancel);
 
             UsersList = new ObservableCollection<Users>();
-            UsersList.AddRange(CurrentSession.GetUsersList());
+            UsersList.AddRange(SessionsHelper.GetUsersList());
         }
     }
 }

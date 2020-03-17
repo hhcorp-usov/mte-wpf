@@ -69,30 +69,16 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            if (_workersId > 0)
+            int sres = SessionsHelper.WorkersSaveChanges(new Workers()
             {
-                var Item = CurrentSession._dbContext.Workers.Where(w => w.Id == _workersId).FirstOrDefault();
-                Item.FirstName = WorkersFirstName;
-                Item.LastName = WorkersLastName;
-                Item.Name = WorkersName;
-                Item.EnterprisesId = WorkersEnterprisesId;
-                Item.PostsId = WorkersPostsId;                
-                CurrentSession._dbContext.Entry(Item).State = EntityState.Modified;
-            }
-            else
-            {
-                Workers Item = new Workers()
-                {
-                    FirstName = WorkersFirstName,
-                    LastName = WorkersLastName,
-                    Name = WorkersName,
-                    EnterprisesId = WorkersEnterprisesId,
-                    PostsId = WorkersPostsId
-            };
-                CurrentSession._dbContext.Workers.Add(Item);
-            }
-            CurrentSession._dbContext.SaveChanges();
-            RaiseRequestClose(new DialogResult(ButtonResult.OK));
+                Id = _workersId,
+                Name = WorkersName,
+                FirstName = WorkersFirstName,
+                LastName = WorkersLastName,
+                EnterprisesId= WorkersEnterprisesId,
+                PostsId= WorkersPostsId
+            });
+            RaiseRequestClose(new DialogResult(sres > 0 ? ButtonResult.OK : ButtonResult.No));
         }
 
         public bool CanCloseDialog()
@@ -137,10 +123,10 @@ namespace mteGuides.ViewModels
             Title = "Сотрудник";
 
             EnterprisesList = new ObservableCollection<Enterprises>();
-            EnterprisesList.AddRange(CurrentSession.GetEnterprisesList());
+            EnterprisesList.AddRange(SessionsHelper.GetEnterprisesList());
 
             PostsList = new ObservableCollection<Posts>();
-            PostsList.AddRange(CurrentSession.GetPostsList());
+            PostsList.AddRange(SessionsHelper.GetPostsList());
 
             ApplyGuidesPopupCommand = new DelegateCommand<object>(ApplyGuidesPopup);
             CloseGuidesPopupCommand = new DelegateCommand<object>(CloseGuidesPopup);

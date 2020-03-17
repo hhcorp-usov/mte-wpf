@@ -15,7 +15,7 @@ namespace mte.ViewModels
 
         public string CurrentSessionUserView
         {
-            get { return CurrentSession.GetCurrentUserView(); }
+            get { return SessionsHelper.GetCurrentUserView(); }
         }
 
         public DelegateCommand<string> SwitchApplicationModeCommand { get; }
