@@ -63,15 +63,31 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\GuidesCarsViewModel.cs" />
     <Compile Include="ViewModels\DefaultGuidesPageViewModel.cs" />
+    <Compile Include="ViewModels\GuidesCarTypesViewModel.cs" />
     <Compile Include="ViewModels\GuidesEnterprisesViewModel.cs" />
+    <Compile Include="ViewModels\GuidesPointsViewModel.cs" />
+    <Compile Include="ViewModels\GuidesPointTypesViewModel.cs" />
     <Compile Include="ViewModels\GuidesPostsViewModel.cs" />
     <Compile Include="ViewModels\GuidesWorkersViewModel.cs" />
+    <Compile Include="Views\GuidesCars.xaml.cs">
+      <DependentUpon>GuidesCars.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DefaultGuidesPage.xaml.cs">
       <DependentUpon>DefaultGuidesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GuidesCarTypes.xaml.cs">
+      <DependentUpon>GuidesCarTypes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GuidesEnterprises.xaml.cs">
       <DependentUpon>GuidesEnterprises.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GuidesPoints.xaml.cs">
+      <DependentUpon>GuidesPoints.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GuidesPointTypes.xaml.cs">
+      <DependentUpon>GuidesPointTypes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GuidesPosts.xaml.cs">
       <DependentUpon>GuidesPosts.xaml</DependentUpon>
@@ -102,11 +118,27 @@
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\GuidesCars.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DefaultGuidesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\GuidesCarTypes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GuidesEnterprises.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GuidesPoints.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GuidesPointTypes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

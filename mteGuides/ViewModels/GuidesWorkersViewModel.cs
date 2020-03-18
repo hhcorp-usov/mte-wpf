@@ -89,6 +89,7 @@ namespace mteGuides.ViewModels
         public void OnDialogClosed() { }
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            Title = "Сотрудник / " + (parameters.Count > 0 ? "Изменение" : "Создание");
             if (parameters.Count > 0)
             {
                 var value = parameters.GetValue<Workers>("Item");
@@ -120,8 +121,6 @@ namespace mteGuides.ViewModels
 
         public GuidesWorkersViewModel(IRegionManager RegionManager)
         {
-            Title = "Сотрудник";
-
             EnterprisesList = new ObservableCollection<Enterprises>();
             EnterprisesList.AddRange(SessionsHelper.GetEnterprisesList());
 

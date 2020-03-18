@@ -1,4 +1,6 @@
-﻿using Prism.Services.Dialogs;
+﻿using MahApps.Metro.Controls;
+using Prism.Services.Dialogs;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace mteGuides.Views

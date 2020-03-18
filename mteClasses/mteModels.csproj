@@ -49,10 +49,18 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\MessageBox.xaml.cs">
+      <DependentUpon>MessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\MessageBoxViewModel.cs" />
+    <Compile Include="Models\Cars.cs" />
+    <Compile Include="Models\CarTypes.cs" />
     <Compile Include="Models\ColumnsBindingBehaviour.cs" />
     <Compile Include="Models\DatabaseContext.cs" />
     <Compile Include="Models\Enterprises.cs" />
     <Compile Include="Models\Navigations.cs" />
+    <Compile Include="Models\Points.cs" />
+    <Compile Include="Models\PointTypes.cs" />
     <Compile Include="Models\Posts.cs" />
     <Compile Include="Models\Sessions.cs" />
     <Compile Include="Models\Users.cs" />
@@ -80,7 +88,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Dialogs\MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework">
       <Version>6.4.0</Version>

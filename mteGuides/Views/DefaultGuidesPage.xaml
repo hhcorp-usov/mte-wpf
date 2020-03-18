@@ -43,7 +43,7 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Cursor="Hand">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition/>
@@ -56,12 +56,26 @@
 
             <ListView.Resources>
                 <col:ArrayList x:Key="GuidesMenuItems">
-                    <local:MenuNavigatorItem Id="Enterprises" Text="Организации" Icon="domain"/>
-                    <local:MenuNavigatorItem Id="Posts" Text="Должности" Icon="accountgroupoutline"/>
-                    <local:MenuNavigatorItem Id="Workers" Text="Сотрудники" Icon="accountcogoutline"/>
-
+                    <local:MenuNavigatorItem Id="Enterprises" Text="Организации" Icon="domain" DialogName="GuidesEnterprises"/>
+                    <local:MenuNavigatorItem Id="Posts" Text="Должности" Icon="accountgroupoutline" DialogName="GuidesPosts"/>
+                    <local:MenuNavigatorItem Id="Workers" Text="Сотрудники" Icon="accountcogoutline" DialogName="GuidesWorkers"/>
+                    <local:MenuNavigatorItem Id="CarTypes" Text="Марки ТС" Icon="carmultiple" DialogName="GuidesCarTypes"/>
+                    <local:MenuNavigatorItem Id="Cars" Text="Транспортные средства" Icon="car" DialogName="GuidesCars"/>
+                    <local:MenuNavigatorItem Id="PointTypes" Text="Типы остановочных пунктов" Icon="routes" DialogName="GuidesPointTypes"/>
+                    <local:MenuNavigatorItem Id="Points" Text="Остановочные пункты" Icon="busstop" DialogName="GuidesPoints"/>
+                    <Separator/>
                     <local:MenuNavigatorItem Id="Users" Text="Пользователи" Icon="accountkeyoutline"/>
                 </col:ArrayList>
+
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
+                    <Setter Property="ItemsControl.Foreground" Value="{StaticResource AccentBaseColorBrush}"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="ItemsControl.Foreground" Value="{StaticResource AccentSelectedColorBrush}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
             </ListView.Resources>
 
         </ListView>
@@ -79,13 +93,13 @@
             </Grid.RowDefinitions>
 
             <ToolBar Grid.Row="0" Margin="0 5">
-                <Button Command="{Binding GuidesAddItemCommand}">
+                <Button Command="{Binding GuidesAddItemCommand}" Cursor="Hand">
                     <iconPacks:PackIconMaterial Kind="FileOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
                 </Button>
-                <Button Command="{Binding GuidesEditItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}">
+                <Button Command="{Binding GuidesEditItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}" Cursor="Hand">
                     <iconPacks:PackIconMaterial Kind="FileEditOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
                 </Button>
-                <Button Command="{Binding GuidesDeleteItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}">
+                <Button Command="{Binding GuidesDeleteItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}" Cursor="Hand">
                     <iconPacks:PackIconMaterial Kind="TrashCanOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
                 </Button>
             </ToolBar>
@@ -93,10 +107,10 @@
             <DataGrid 
                 Grid.Row="1" SelectionMode="Single"
                 Margin="5 0" BorderThickness="0"
-                ItemsSource="{Binding GuidesDataItems}" 
-                SelectedItem="{Binding GuidesDataSelectedItems, Mode=TwoWay}" 
+                ItemsSource="{Binding GuidesDataItems}"
+                SelectedItem="{Binding GuidesDataSelectedItems, Mode=TwoWay}"
                 AutoGenerateColumns="False" IsReadOnly="True"
-                Style="{StaticResource AzureDataGrid}"                
+                Style="{StaticResource AzureDataGrid}"
                 >
 
                 <i:Interaction.Behaviors>

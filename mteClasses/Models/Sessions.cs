@@ -46,6 +46,22 @@ namespace mteModels.Models
                 case GuidesElements.Users:
                     res = UsersHelper.GetDataGridItems(_dbContext);
                     break;
+
+                case GuidesElements.CarTypes:
+                    res = CarTypesHelper.GetDataGridItems(_dbContext);
+                    break;
+
+                case GuidesElements.Cars:
+                    res = CarsHelper.GetDataGridItems(_dbContext);
+                    break;
+
+                case GuidesElements.PointTypes:
+                    res = PointTypesHelper.GetDataGridItems(_dbContext);
+                    break;
+
+                case GuidesElements.Points:
+                    res = PointsHelper.GetDataGridItems(_dbContext);
+                    break;
             }
             return res;
         }
@@ -70,6 +86,62 @@ namespace mteModels.Models
                 case GuidesElements.Users:
                     res = UsersHelper.GetDataGridColumns(); 
                     break;
+
+                case GuidesElements.CarTypes:
+                    res = CarTypesHelper.GetDataGridColumns();
+                    break;
+
+                case GuidesElements.Cars:
+                    res = CarsHelper.GetDataGridColumns();
+                    break;
+
+                case GuidesElements.PointTypes:
+                    res = PointTypesHelper.GetDataGridColumns();
+                    break;
+
+                case GuidesElements.Points:
+                    res = PointsHelper.GetDataGridColumns();
+                    break;
+            }
+            return res;
+        }
+
+        public static int DeleteDataGridGuidesItem(GuidesElements GuidesName, object SelectedItem)
+        {
+            int res = 0;
+            switch (GuidesName)
+            {
+                case GuidesElements.Enterprises:
+                    res = EnterprisesHelper.DeleteDataGridItem(_dbContext, (Enterprises)SelectedItem);
+                    break;
+
+                case GuidesElements.Posts:
+                    res = PostsHelper.DeleteDataGridItem(_dbContext, (Posts)SelectedItem);
+                    break;
+
+                case GuidesElements.Workers:
+                    res = WorkersHelper.DeleteDataGridItem(_dbContext, (Workers)SelectedItem);
+                    break;
+
+                case GuidesElements.Users:
+                    res = UsersHelper.DeleteDataGridItem(_dbContext, (Users)SelectedItem);
+                    break;
+
+                case GuidesElements.CarTypes:
+                    res = CarTypesHelper.DeleteDataGridItem(_dbContext, (CarTypes)SelectedItem);
+                    break;
+
+                case GuidesElements.Cars:
+                    res = CarsHelper.DeleteDataGridItem(_dbContext, (Cars)SelectedItem);
+                    break;
+
+                case GuidesElements.PointTypes:
+                    res = PointTypesHelper.DeleteDataGridItem(_dbContext, (PointTypes)SelectedItem);
+                    break;
+
+                case GuidesElements.Points:
+                    res = PointsHelper.DeleteDataGridItem(_dbContext, (Points)SelectedItem);
+                    break;
             }
             return res;
         }
@@ -87,6 +159,16 @@ namespace mteModels.Models
         public static List<Posts> GetPostsList()
         {
             return _dbContext.Posts.OrderBy(o => o.Name).ToList();
+        }
+
+        public static List<CarTypes> GetCarTypesList()
+        {
+            return _dbContext.CarTypes.OrderBy(o => o.Name).ToList();
+        }
+
+        public static List<PointTypes> GetPointTypesList()
+        {
+            return _dbContext.PointTypes.OrderBy(o => o.Name).ToList();
         }
 
         public static int EnterprisesSaveChanges(Enterprises item)
@@ -129,5 +211,59 @@ namespace mteModels.Models
             else _dbContext.Workers.Add(item);
             return _dbContext.SaveChanges();
         }
+
+        public static int CarTypesSaveChanges(CarTypes item)
+        {
+            if (item.Id > 0)
+            {
+                CarTypes _item = _dbContext.CarTypes.Where(w => w.Id == item.Id).SingleOrDefault();
+                _item.Name = item.Name;
+                _dbContext.Entry(_item).State = EntityState.Modified;
+            }
+            else _dbContext.CarTypes.Add(item);
+            return _dbContext.SaveChanges();
+        }
+
+        public static int CarsSaveChanges(Cars item)
+        {
+            if (item.Id > 0)
+            {
+                Cars _item = _dbContext.Cars.Where(w => w.Id == item.Id).SingleOrDefault();
+                _item.INomer = item.INomer;
+                _item.EnterprisesId = item.EnterprisesId;
+                _item.CarTypesId = item.CarTypesId;
+                _item.SNomer= item.SNomer;
+                _dbContext.Entry(_item).State = EntityState.Modified;
+            }
+            else _dbContext.Cars.Add(item);
+            return _dbContext.SaveChanges();
+        }
+
+        public static int PointTypesSaveChanges(PointTypes item)
+        {
+            if (item.Id > 0)
+            {
+                PointTypes _item = _dbContext.PointTypes.Where(w => w.Id == item.Id).SingleOrDefault();
+                _item.Name = item.Name;
+                _item.ShortName = item.ShortName;
+                _dbContext.Entry(_item).State = EntityState.Modified;
+            }
+            else _dbContext.PointTypes.Add(item);
+            return _dbContext.SaveChanges();
+        }
+
+        public static int PointsSaveChanges(Points item)
+        {
+            if (item.Id > 0)
+            {
+                Points _item = _dbContext.Points.Where(w => w.Id == item.Id).SingleOrDefault();
+                _item.Name = item.Name;
+                _item.PointTypesId = item.PointTypesId;
+                _dbContext.Entry(_item).State = EntityState.Modified;
+            }
+            else _dbContext.Points.Add(item);
+            return _dbContext.SaveChanges();
+        }
+
     }
 }

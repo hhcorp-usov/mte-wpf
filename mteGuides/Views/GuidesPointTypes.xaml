@@ -1,5 +1,5 @@
 ﻿<UserControl 
-    x:Class="mteGuides.Views.GuidesPosts"
+    x:Class="mteGuides.Views.GuidesPointTypes"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prism="http://prismlibrary.com/"
@@ -24,7 +24,9 @@
                 <Border BorderBrush="{StaticResource AccentBaseColorBrush}" BorderThickness="1" Height="1"/>
                 <StackPanel Margin="10 5 10 0">
                     <Label Content="Наименование"/>
-                    <TextBox x:Name="PostsName" Text="{Binding PostsName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="PointTypesName" Text="{Binding PointTypesName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Короткое наименование"/>
+                    <TextBox Text="{Binding PointTypesShortName, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="10">
                     <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Height="35" >

@@ -9,14 +9,14 @@ using System.Windows.Data;
 
 namespace mteModels.Models
 {
-    public class Posts : IDataList
+    public class CarTypes : IDataList
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
-    public static class PostsHelper
+    public static class CarTypesHelper
     {
         public static ObservableCollection<DataGridColumn> GetDataGridColumns()
         {
@@ -28,13 +28,13 @@ namespace mteModels.Models
 
         public static IReadOnlyList<IDataList> GetDataGridItems(DatabaseContext _dbContext)
         {
-            return _dbContext.Posts.OrderBy(o => o.Id).ToList();
+            return _dbContext.CarTypes.OrderBy(o => o.Id).ToList();
         }
 
-        public static int DeleteDataGridItem(DatabaseContext _dbContext, Posts SelectedItem)
+        public static int DeleteDataGridItem(DatabaseContext _dbContext, CarTypes SelectedItem)
         {
-            Posts _item = _dbContext.Posts.Where(w => w.Id == SelectedItem.Id).SingleOrDefault();
-            _dbContext.Posts.Remove(_item);
+            CarTypes _item = _dbContext.CarTypes.Where(w => w.Id == SelectedItem.Id).SingleOrDefault();
+            _dbContext.CarTypes.Remove(_item);
             return _dbContext.SaveChanges();
         }
     }

@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 
 namespace mteGuides.ViewModels
@@ -22,18 +23,18 @@ namespace mteGuides.ViewModels
             set { SetProperty(ref (_dataGridColumns), value); }
         }
 
-        private MenuNavigatorItem _guidesMenuSelectedItem;
-        public MenuNavigatorItem GuidesMenuSelectedItem
-        {
-            get { return _guidesMenuSelectedItem; }
-            set { SetProperty(ref (_guidesMenuSelectedItem), value); }
-        }
-
         private IReadOnlyList<IDataList> _guidesDataItems;
         public IReadOnlyList<IDataList> GuidesDataItems
         {
             get { return _guidesDataItems; }
             set { SetProperty(ref (_guidesDataItems), value); }
+        }
+
+        private MenuNavigatorItem _guidesMenuSelectedItem;
+        public MenuNavigatorItem GuidesMenuSelectedItem
+        {
+            get { return _guidesMenuSelectedItem; }
+            set { SetProperty(ref (_guidesMenuSelectedItem), value); }
         }
 
         private string _guidesName;
@@ -48,10 +49,13 @@ namespace mteGuides.ViewModels
         {
             if (MenuItem is MenuNavigatorItem)
             {
-                var _currentMenuItem = (MenuItem as MenuNavigatorItem);
+                var _currentMenuItem = MenuItem as MenuNavigatorItem;
                 DataGridColumns = SessionsHelper.GetDataGridGuidesColumns(_currentMenuItem.Id);
                 GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(_currentMenuItem.Id);
                 GuidesName = _currentMenuItem.Text;
+                if (GuidesDataItems != null) 
+                    if (GuidesDataItems.Count > 0) 
+                        GuidesDataSelectedItems = GuidesDataItems[0];
             }
         }
 
@@ -68,83 +72,46 @@ namespace mteGuides.ViewModels
         
         private void GuidesAddItem()
         {
-            DialogParameters param = new DialogParameters();
-            switch (GuidesMenuSelectedItem.Id) 
+            _currentDialogService.ShowDialog(GuidesMenuSelectedItem.DialogName, new DialogParameters(), r =>
             {
-                case GuidesElements.Enterprises:
-                    _currentDialogService.ShowDialog("GuidesEnterprises", param, r =>
-                    {
-                        if (r.Result == ButtonResult.OK)
-                        {
-                            GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
-                        }
-                    });
-                    break;
-
-                case GuidesElements.Posts:
-                    _currentDialogService.ShowDialog("GuidesPosts", param, r =>
-                    {
-                        if (r.Result == ButtonResult.OK)
-                        {
-                            GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
-                        }
-                    });
-                    break;
-
-                case GuidesElements.Workers:
-                    _currentDialogService.ShowDialog("GuidesWorkers", param, r =>
-                    {
-                        if (r.Result == ButtonResult.OK)
-                        {
-                            GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
-                        }
-                    });
-                    break;
-            }
+                if (r.Result == ButtonResult.OK)
+                {
+                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
+                }
+            });
         }
 
         private void GuidesEditItem(object SelectedItem)
         {
-            DialogParameters param = new DialogParameters();
-            switch (GuidesMenuSelectedItem.Id)
+            DialogParameters param = new DialogParameters
             {
-                case GuidesElements.Enterprises:
-                    param.Add("Item", SelectedItem);
-                    _currentDialogService.ShowDialog("GuidesEnterprises", param, r =>
-                    {
-                        if (r.Result == ButtonResult.OK)
-                        {
-                            GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
-                        }
-                    });
-                    break;
+                { "Item", SelectedItem }
+            };
 
-                case GuidesElements.Posts:
-                    param.Add("Item", SelectedItem);
-                    _currentDialogService.ShowDialog("GuidesPosts", param, r =>
-                    {
-                        if (r.Result == ButtonResult.OK)
-                        {
-                            GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
-                        }
-                    });
-                    break;
-
-                case GuidesElements.Workers:
-                    param.Add("Item", SelectedItem);
-                    _currentDialogService.ShowDialog("GuidesWorkers", param, r =>
-                    {
-                        if (r.Result == ButtonResult.OK)
-                        {
-                            GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
-                        }
-                    });
-                    break;
-            }
+            _currentDialogService.ShowDialog(GuidesMenuSelectedItem.DialogName, param, r =>
+            {
+                if (r.Result == ButtonResult.OK)
+                {
+                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
+                }
+            });
         }
 
         private void GuidesDeleteItem(object SelectedItem)
         {
+            DialogParameters param = new DialogParameters
+            {
+                { "message", "Удалить выбранный элемент?" }
+            };
+
+            _currentDialogService.ShowDialog("MessageBox", param, r =>
+            {
+                if (r.Result == ButtonResult.OK)
+                {
+                    SessionsHelper.DeleteDataGridGuidesItem(GuidesMenuSelectedItem.Id, SelectedItem);
+                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
+                }
+            });
         }
 
         private readonly IDialogService _currentDialogService;
@@ -152,6 +119,7 @@ namespace mteGuides.ViewModels
         public DefaultGuidesPageViewModel(IDialogService DialogService)
         {
             _currentDialogService = DialogService;
+            
             GuidesMenuNavigatorSelectedItemCommand = new DelegateCommand<object>(GuidesMenuNavigatorSelectedItem);
             GuidesAddItemCommand = new DelegateCommand(GuidesAddItem);
             GuidesEditItemCommand = new DelegateCommand<object>(GuidesEditItem);

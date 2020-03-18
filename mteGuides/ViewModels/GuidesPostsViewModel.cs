@@ -46,6 +46,7 @@ namespace mteGuides.ViewModels
         public void OnDialogClosed() { }
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            Title = "Должность / " + (parameters.Count > 0 ? "Изменение" : "Создание");
             if (parameters.Count > 0)
             {
                 var value = parameters.GetValue<Posts>("Item");
@@ -73,7 +74,6 @@ namespace mteGuides.ViewModels
 
         public GuidesPostsViewModel(IRegionManager RegionManager)
         {
-            Title = "Должность";
             ApplyGuidesPopupCommand = new DelegateCommand<object>(ApplyGuidesPopup);
             CloseGuidesPopupCommand = new DelegateCommand<object>(CloseGuidesPopup);
         }

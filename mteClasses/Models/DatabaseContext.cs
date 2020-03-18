@@ -18,6 +18,10 @@ namespace mteModels.Models
         public DbSet<Enterprises> Enterprises { get; set; }
         public DbSet<Posts> Posts { get; set; }
         public DbSet<Workers> Workers { get; set; }
+        public DbSet<CarTypes> CarTypes { get; set; }
+        public DbSet<Cars> Cars { get; set; }
+        public DbSet<PointTypes> PointTypes { get; set; }
+        public DbSet<Points> Points { get; set; }
 
         public DatabaseContext(string DatabaseConnectionString) : base(DatabaseConnectionString)
         {

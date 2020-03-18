@@ -11,7 +11,11 @@ namespace mteModels.Models
         Enterprises,
         Posts,
         Workers,
-        Users
+        Users,
+        CarTypes,
+        Cars,
+        PointTypes,
+        Points
     }
 
     public class MenuNavigatorItem
@@ -19,5 +23,6 @@ namespace mteModels.Models
         public GuidesElements Id { get; set; }
         public string Icon { get; set; }
         public string Text { get; set; }
+        public string DialogName { get; set; }
     }
 }

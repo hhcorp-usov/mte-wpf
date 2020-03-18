@@ -1,31 +1,24 @@
-﻿using Prism.Commands;
+﻿using mteModels.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using mteModels.Models;
-using Prism.Services.Dialogs;
 using System.Data.Entity;
+using System.Linq;
 
 namespace mteGuides.ViewModels
 {
-    public class GuidesEnterprisesViewModel : BindableBase, IDialogAware
+    public class GuidesCarTypesViewModel : BindableBase, IDialogAware
     {
-        private int _enteprisesId;
+        private int _carTypesId;
 
-        private string _enterprisesName;
-        public string EnterprisesName
+        private string _carTypesName;
+        public string CarTypesName
         {
-            get { return _enterprisesName; }
-            set { SetProperty(ref (_enterprisesName), value); }
-        }
-
-        private string _enterprisesInn;
-        public string EnterprisesInn
-        {
-            get { return _enterprisesInn; }
-            set { SetProperty(ref (_enterprisesInn), value); }
+            get { return _carTypesName; }
+            set { SetProperty(ref (_carTypesName), value); }
         }
 
         public DelegateCommand<object> CloseGuidesPopupCommand { get; set; }
@@ -37,11 +30,10 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            int sres = SessionsHelper.EnterprisesSaveChanges(new Enterprises()
+            int sres = SessionsHelper.CarTypesSaveChanges(new CarTypes()
             {
-                Id = _enteprisesId,
-                Inn = EnterprisesInn,
-                Name = EnterprisesName
+                Id = _carTypesId,
+                Name = CarTypesName
             });
             RaiseRequestClose(new DialogResult(sres > 0 ? ButtonResult.OK : ButtonResult.No));
         }
@@ -54,15 +46,14 @@ namespace mteGuides.ViewModels
         public void OnDialogClosed() { }
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            Title = "Организация / " + (parameters.Count > 0 ? "Изменение" : "Создание");
+            Title = "Марки ТС / " + (parameters.Count > 0 ? "Изменение" : "Создание");
             if (parameters.Count > 0)
             {
-                var value = parameters.GetValue<Enterprises>("Item");
+                var value = parameters.GetValue<CarTypes>("Item");
                 if (value != null)
                 {
-                    _enteprisesId = value.Id;
-                    EnterprisesName = value.Name;
-                    EnterprisesInn = value.Inn;
+                    _carTypesId = value.Id;
+                    CarTypesName = value.Name;
                 }
             }
         }
@@ -81,7 +72,7 @@ namespace mteGuides.ViewModels
             set { SetProperty(ref (_title), value); }
         }
 
-        public GuidesEnterprisesViewModel(IRegionManager RegionManager)
+        public GuidesCarTypesViewModel(IRegionManager RegionManager)
         {
             ApplyGuidesPopupCommand = new DelegateCommand<object>(ApplyGuidesPopup);
             CloseGuidesPopupCommand = new DelegateCommand<object>(CloseGuidesPopup);

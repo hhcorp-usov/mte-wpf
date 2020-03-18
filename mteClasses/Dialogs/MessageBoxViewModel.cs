@@ -1,31 +1,20 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using mteModels.Models;
-using Prism.Services.Dialogs;
-using System.Data.Entity;
 
-namespace mteGuides.ViewModels
+namespace mteModels.Dialogs
 {
-    public class GuidesEnterprisesViewModel : BindableBase, IDialogAware
+    public class MessageBoxViewModel : BindableBase, IDialogAware
     {
-        private int _enteprisesId;
-
-        private string _enterprisesName;
-        public string EnterprisesName
+        private string _messageBoxText;
+        public string MessageBoxText
         {
-            get { return _enterprisesName; }
-            set { SetProperty(ref (_enterprisesName), value); }
-        }
-
-        private string _enterprisesInn;
-        public string EnterprisesInn
-        {
-            get { return _enterprisesInn; }
-            set { SetProperty(ref (_enterprisesInn), value); }
+            get { return _messageBoxText; }
+            set { SetProperty(ref (_messageBoxText), value); }
         }
 
         public DelegateCommand<object> CloseGuidesPopupCommand { get; set; }
@@ -37,13 +26,7 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            int sres = SessionsHelper.EnterprisesSaveChanges(new Enterprises()
-            {
-                Id = _enteprisesId,
-                Inn = EnterprisesInn,
-                Name = EnterprisesName
-            });
-            RaiseRequestClose(new DialogResult(sres > 0 ? ButtonResult.OK : ButtonResult.No));
+            RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
 
         public bool CanCloseDialog()
@@ -54,15 +37,13 @@ namespace mteGuides.ViewModels
         public void OnDialogClosed() { }
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            Title = "Организация / " + (parameters.Count > 0 ? "Изменение" : "Создание");
+            Title = "Внимание";
             if (parameters.Count > 0)
             {
-                var value = parameters.GetValue<Enterprises>("Item");
+                var value = parameters.GetValue<string>("message");
                 if (value != null)
                 {
-                    _enteprisesId = value.Id;
-                    EnterprisesName = value.Name;
-                    EnterprisesInn = value.Inn;
+                    MessageBoxText = value.Trim();
                 }
             }
         }
@@ -81,7 +62,7 @@ namespace mteGuides.ViewModels
             set { SetProperty(ref (_title), value); }
         }
 
-        public GuidesEnterprisesViewModel(IRegionManager RegionManager)
+        public MessageBoxViewModel(IRegionManager RegionManager)
         {
             ApplyGuidesPopupCommand = new DelegateCommand<object>(ApplyGuidesPopup);
             CloseGuidesPopupCommand = new DelegateCommand<object>(CloseGuidesPopup);

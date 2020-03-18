@@ -36,5 +36,12 @@ namespace mteModels.Models
         {
             return _dbContext.Users.OrderBy(o => o.Id).ToList();
         }
+
+        public static int DeleteDataGridItem(DatabaseContext _dbContext, Users SelectedItem)
+        {
+            Users _item = _dbContext.Users.Where(w => w.Id == SelectedItem.Id).SingleOrDefault();
+            _dbContext.Users.Remove(_item);
+            return _dbContext.SaveChanges();
+        }
     }
 }

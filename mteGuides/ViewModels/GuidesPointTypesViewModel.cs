@@ -1,33 +1,33 @@
-﻿using Prism.Commands;
+﻿using mteModels.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using mteModels.Models;
-using Prism.Services.Dialogs;
 using System.Data.Entity;
+using System.Linq;
 
 namespace mteGuides.ViewModels
 {
-    public class GuidesEnterprisesViewModel : BindableBase, IDialogAware
+    public class GuidesPointTypesViewModel : BindableBase, IDialogAware
     {
-        private int _enteprisesId;
+        private int _pointTypesId;
 
-        private string _enterprisesName;
-        public string EnterprisesName
+        private string _pointTypesName;
+        public string PointTypesName
         {
-            get { return _enterprisesName; }
-            set { SetProperty(ref (_enterprisesName), value); }
+            get { return _pointTypesName; }
+            set { SetProperty(ref (_pointTypesName), value); }
         }
 
-        private string _enterprisesInn;
-        public string EnterprisesInn
+        private string _pointTypesShortName;
+        public string PointTypesShortName
         {
-            get { return _enterprisesInn; }
-            set { SetProperty(ref (_enterprisesInn), value); }
+            get { return _pointTypesShortName; }
+            set { SetProperty(ref (_pointTypesShortName), value); }
         }
-
+        
         public DelegateCommand<object> CloseGuidesPopupCommand { get; set; }
         private void CloseGuidesPopup(object Parameters)
         {
@@ -37,11 +37,11 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            int sres = SessionsHelper.EnterprisesSaveChanges(new Enterprises()
+            int sres = SessionsHelper.PointTypesSaveChanges(new PointTypes()
             {
-                Id = _enteprisesId,
-                Inn = EnterprisesInn,
-                Name = EnterprisesName
+                Id = _pointTypesId,
+                Name = PointTypesName,
+                ShortName = PointTypesShortName
             });
             RaiseRequestClose(new DialogResult(sres > 0 ? ButtonResult.OK : ButtonResult.No));
         }
@@ -54,15 +54,15 @@ namespace mteGuides.ViewModels
         public void OnDialogClosed() { }
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            Title = "Организация / " + (parameters.Count > 0 ? "Изменение" : "Создание");
+            Title = "Тип остановочного пункта / " + (parameters.Count > 0 ? "Изменение" : "Создание");
             if (parameters.Count > 0)
             {
-                var value = parameters.GetValue<Enterprises>("Item");
+                var value = parameters.GetValue<PointTypes>("Item");
                 if (value != null)
                 {
-                    _enteprisesId = value.Id;
-                    EnterprisesName = value.Name;
-                    EnterprisesInn = value.Inn;
+                    _pointTypesId = value.Id;
+                    PointTypesName = value.Name;
+                    PointTypesShortName = value.ShortName;
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace mteGuides.ViewModels
             set { SetProperty(ref (_title), value); }
         }
 
-        public GuidesEnterprisesViewModel(IRegionManager RegionManager)
+        public GuidesPointTypesViewModel(IRegionManager RegionManager)
         {
             ApplyGuidesPopupCommand = new DelegateCommand<object>(ApplyGuidesPopup);
             CloseGuidesPopupCommand = new DelegateCommand<object>(CloseGuidesPopup);

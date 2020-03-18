@@ -3,14 +3,14 @@
 namespace mteGuides.Views
 {
     /// <summary>
-    /// Interaction logic for GuidesPosts
+    /// Interaction logic for GuidesCarTypes
     /// </summary>
-    public partial class GuidesPosts : UserControl
+    public partial class GuidesCarTypes : UserControl
     {
-        public GuidesPosts()
+        public GuidesCarTypes()
         {
             InitializeComponent();
-            PostsName.Focus();
+            CarTypesName.Focus();
         }
     }
 }

@@ -7,7 +7,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"        
         Width="500" Height="300"
         UseNoneWindowStyle="True"
-        BorderThickness="2"
+        BorderThickness="1"
         WindowStyle="None"
         WindowState="Normal"
         FontFamily="Arial"
@@ -31,7 +31,7 @@
             <Line Stroke="{StaticResource AccentColorBrush2}" StrokeThickness="1" X1="0" X2="150"/>
             <TextBlock Text="program" FontSize="12" FontStyle="Italic" Foreground="{StaticResource AccentColorBrush2}"/>
         </StackPanel>
-        <Line X1="0" X2="470" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SnapsToDevicePixels="True" Stroke="{StaticResource AccentColorBrush}" StrokeThickness="2"/>
+        <Line X1="0" X2="470" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SnapsToDevicePixels="True" Stroke="{StaticResource AccentColorBrush}" StrokeThickness="1"/>
         <TextBlock x:Name="SplashScreenTextBlock" Text="Status" FontSize="12" FontStyle="Italic" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{StaticResource AccentColorBrush}" Margin="10 20 10 10"/>
         <Controls:ProgressRing x:Name="SplashScreenProgressRing" Grid.Column="2" Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="48" Height="48" IsActive="False"/>
         <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ChromelessButtonStyle}" Command="{Binding CloseSplashScreenCommand}" Cursor="Hand">
