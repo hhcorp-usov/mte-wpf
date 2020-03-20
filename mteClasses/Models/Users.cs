@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace mteModels.Models
 {
-    public class Users : IDataList
+    public class Users : IGuidesItem
     {
         [Key]
         public int Id { get; set; }
@@ -18,30 +18,17 @@ namespace mteModels.Models
         public int PostsId { get; set; }
 
         public virtual Posts Posts { get; set; }
-    }
 
-    public static class UsersHelper
-    {
-        public static ObservableCollection<DataGridColumn> GetDataGridColumns()
+        public int DeleteItem(DatabaseContext _dbContext)
         {
-            ObservableCollection<DataGridColumn> res = new ObservableCollection<DataGridColumn>();
-            res.Add(new DataGridTextColumn() { Header = "ID", Width = 50, Binding = new Binding() { Path = new PropertyPath("Id") } });
-            res.Add(new DataGridTextColumn() { Header = "LOGIN", Width = new DataGridLength(100, DataGridLengthUnitType.Star), Binding = new Binding() { Path = new PropertyPath("Login") } });
-            res.Add(new DataGridTextColumn() { Header = "NAME", Width = new DataGridLength(100, DataGridLengthUnitType.Star), Binding = new Binding() { Path = new PropertyPath("Name") } });
-            res.Add(new DataGridTextColumn() { Header = "POST", Width = 100, Binding = new Binding() { Path = new PropertyPath("Posts.Name") } });
-            return res;
-        }
-
-        public static IReadOnlyList<IDataList> GetDataGridItems(DatabaseContext _dbContext)
-        {
-            return _dbContext.Users.OrderBy(o => o.Id).ToList();
-        }
-
-        public static int DeleteDataGridItem(DatabaseContext _dbContext, Users SelectedItem)
-        {
-            Users _item = _dbContext.Users.Where(w => w.Id == SelectedItem.Id).SingleOrDefault();
+            Users _item = _dbContext.Users.Find(this.Id);
             _dbContext.Users.Remove(_item);
             return _dbContext.SaveChanges();
+        }
+
+        public int SaveItem(DatabaseContext _dbContext)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

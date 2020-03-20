@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ADEA0EE7-C749-44E2-B5D9-030B33383854}</ProjectGuid>
+    <ProjectGuid>{D175110F-94A1-4C7D-8763-D8DDF9674487}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>mteModels</RootNamespace>
-    <AssemblyName>mteModels</AssemblyName>
+    <RootNamespace>mteWayBills</RootNamespace>
+    <AssemblyName>mteWayBills</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,25 +49,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dialogs\MessageBox.xaml.cs">
-      <DependentUpon>MessageBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\MessageBoxViewModel.cs" />
-    <Compile Include="Models\Cars.cs" />
-    <Compile Include="Models\CarTypes.cs" />
-    <Compile Include="Models\ColumnsBindingBehaviour.cs" />
-    <Compile Include="Models\DatabaseContext.cs" />
-    <Compile Include="Models\Enterprises.cs" />
-    <Compile Include="Models\Interfaces.cs" />
-    <Compile Include="Models\Navigations.cs" />
-    <Compile Include="Models\Points.cs" />
-    <Compile Include="Models\PointTypes.cs" />
-    <Compile Include="Models\Posts.cs" />
-    <Compile Include="Models\Routes.cs" />
-    <Compile Include="Models\Sessions.cs" />
-    <Compile Include="Models\Users.cs" />
-    <Compile Include="Models\WayBills.cs" />
-    <Compile Include="Models\Workers.cs" />
+    <Compile Include="mteWayBillsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -81,6 +63,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\DefaultDocumentsPageViewModel.cs" />
+    <Compile Include="Views\DefaultDocumentsPage.xaml.cs">
+      <DependentUpon>DefaultDocumentsPage.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -92,14 +78,30 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Dialogs\MessageBox.xaml">
+    <ProjectReference Include="..\mteClasses\mteModels.csproj">
+      <Project>{adea0ee7-c749-44e2-b5d9-030b33383854}</Project>
+      <Name>mteModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\mteGuides\mteGuides.csproj">
+      <Project>{138459d2-d773-46c2-b35f-c52519051e82}</Project>
+      <Name>mteGuides</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\DefaultDocumentsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="EntityFramework">
-      <Version>6.4.0</Version>
+    <PackageReference Include="MahApps.Metro">
+      <Version>1.6.5</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro.IconPacks">
+      <Version>3.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro.IconPacks.Material">
+      <Version>3.4.0</Version>
     </PackageReference>
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>

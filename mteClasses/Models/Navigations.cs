@@ -15,7 +15,8 @@ namespace mteModels.Models
         CarTypes,
         Cars,
         PointTypes,
-        Points
+        Points,
+        Routes
     }
 
     public class MenuNavigatorItem

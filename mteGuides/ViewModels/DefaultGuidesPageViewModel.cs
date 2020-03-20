@@ -23,8 +23,8 @@ namespace mteGuides.ViewModels
             set { SetProperty(ref (_dataGridColumns), value); }
         }
 
-        private IReadOnlyList<IDataList> _guidesDataItems;
-        public IReadOnlyList<IDataList> GuidesDataItems
+        private IReadOnlyList<IGuidesItem> _guidesDataItems;
+        public IReadOnlyList<IGuidesItem> GuidesDataItems
         {
             get { return _guidesDataItems; }
             set { SetProperty(ref (_guidesDataItems), value); }
@@ -50,8 +50,8 @@ namespace mteGuides.ViewModels
             if (MenuItem is MenuNavigatorItem)
             {
                 var _currentMenuItem = MenuItem as MenuNavigatorItem;
-                DataGridColumns = SessionsHelper.GetDataGridGuidesColumns(_currentMenuItem.Id);
-                GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(_currentMenuItem.Id);
+                DataGridColumns = SessionsHelper.GetDataGridGuidesColumns(_currentMenuItem);
+                GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(_currentMenuItem);
                 GuidesName = _currentMenuItem.Text;
                 if (GuidesDataItems != null) 
                     if (GuidesDataItems.Count > 0) 
@@ -76,7 +76,7 @@ namespace mteGuides.ViewModels
             {
                 if (r.Result == ButtonResult.OK)
                 {
-                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
+                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem);
                 }
             });
         }
@@ -92,7 +92,7 @@ namespace mteGuides.ViewModels
             {
                 if (r.Result == ButtonResult.OK)
                 {
-                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
+                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem);
                 }
             });
         }
@@ -108,8 +108,8 @@ namespace mteGuides.ViewModels
             {
                 if (r.Result == ButtonResult.OK)
                 {
-                    SessionsHelper.DeleteDataGridGuidesItem(GuidesMenuSelectedItem.Id, SelectedItem);
-                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem.Id);
+                    SessionsHelper.GuidesItemDelete(SelectedItem as IGuidesItem);
+                    GuidesDataItems = SessionsHelper.GetDataGridGuidesItems(GuidesMenuSelectedItem);
                 }
             });
         }

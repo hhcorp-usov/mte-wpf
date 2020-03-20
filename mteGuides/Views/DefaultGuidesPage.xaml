@@ -61,9 +61,9 @@
                     <local:MenuNavigatorItem Id="Workers" Text="Сотрудники" Icon="accountcogoutline" DialogName="GuidesWorkers"/>
                     <local:MenuNavigatorItem Id="CarTypes" Text="Марки ТС" Icon="carmultiple" DialogName="GuidesCarTypes"/>
                     <local:MenuNavigatorItem Id="Cars" Text="Транспортные средства" Icon="car" DialogName="GuidesCars"/>
-                    <local:MenuNavigatorItem Id="PointTypes" Text="Типы остановочных пунктов" Icon="routes" DialogName="GuidesPointTypes"/>
+                    <local:MenuNavigatorItem Id="PointTypes" Text="Типы остановочных пунктов" Icon="crosshairsgps" DialogName="GuidesPointTypes"/>
                     <local:MenuNavigatorItem Id="Points" Text="Остановочные пункты" Icon="busstop" DialogName="GuidesPoints"/>
-                    <Separator/>
+                    <local:MenuNavigatorItem Id="Routes" Text="Маршруты" Icon="routes" DialogName="GuidesRoutes"/>
                     <local:MenuNavigatorItem Id="Users" Text="Пользователи" Icon="accountkeyoutline"/>
                 </col:ArrayList>
 
@@ -92,17 +92,20 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <ToolBar Grid.Row="0" Margin="0 5">
-                <Button Command="{Binding GuidesAddItemCommand}" Cursor="Hand">
-                    <iconPacks:PackIconMaterial Kind="FileOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
-                </Button>
-                <Button Command="{Binding GuidesEditItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}" Cursor="Hand">
-                    <iconPacks:PackIconMaterial Kind="FileEditOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
-                </Button>
-                <Button Command="{Binding GuidesDeleteItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}" Cursor="Hand">
-                    <iconPacks:PackIconMaterial Kind="TrashCanOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
-                </Button>
-            </ToolBar>
+            <DockPanel>
+                <ToolBar Grid.Row="0" Margin="0 5">
+                    <Button Command="{Binding GuidesAddItemCommand}" Cursor="Hand">
+                        <iconPacks:PackIconMaterial Kind="FileOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
+                    </Button>
+                    <Button Command="{Binding GuidesEditItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}" Cursor="Hand">
+                        <iconPacks:PackIconMaterial Kind="FileEditOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
+                    </Button>
+                    <Button Command="{Binding GuidesDeleteItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}" Cursor="Hand">
+                        <iconPacks:PackIconMaterial Kind="TrashCanOutline" Width="24" Height="24" Foreground="{StaticResource AccentBaseColorBrush}"/>
+                    </Button>
+                </ToolBar>
+                <TextBox Text="" Width="250" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 5 0"/>
+            </DockPanel>
 
             <DataGrid 
                 Grid.Row="1" SelectionMode="Single"
@@ -116,7 +119,7 @@
                 <i:Interaction.Behaviors>
                     <bh:ColumnsBindingBehaviour Columns="{Binding DataGridColumns}"/>
                 </i:Interaction.Behaviors>
-                
+
                 <DataGrid.InputBindings>
                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding GuidesEditItemCommand}" CommandParameter="{Binding GuidesDataSelectedItems}"/>
                 </DataGrid.InputBindings>

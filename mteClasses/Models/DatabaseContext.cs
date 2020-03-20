@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace mteModels.Models
 {
-    public interface IDataList
-    {
-    }
-
     public class DatabaseContext : DbContext
     {
         public DbSet<Users> Users { get; set; }
@@ -22,6 +15,7 @@ namespace mteModels.Models
         public DbSet<Cars> Cars { get; set; }
         public DbSet<PointTypes> PointTypes { get; set; }
         public DbSet<Points> Points { get; set; }
+        public DbSet<Routes> Routes { get; set; }
 
         public DatabaseContext(string DatabaseConnectionString) : base(DatabaseConnectionString)
         {

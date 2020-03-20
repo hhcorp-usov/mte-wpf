@@ -11,9 +11,9 @@ using System.Linq;
 
 namespace mteGuides.ViewModels
 {
-    public class GuidesCarsViewModel : BindableBase, IDialogAware
+    public class GuidesRoutesViewModel : BindableBase, IDialogAware
     {
-        private int _carsId;
+        private int _routesId;
 
         private ObservableCollection<Enterprises> _enterprisesList;
         public ObservableCollection<Enterprises> EnterprisesList
@@ -22,36 +22,35 @@ namespace mteGuides.ViewModels
             set { SetProperty(ref _enterprisesList, value); }
         }
 
-        private ObservableCollection<CarTypes> _carTypesList;
-        public ObservableCollection<CarTypes> CarTypesList
+        private int _routesEnterprisesId;
+        public int RoutesEnterprisesId
         {
-            get { return _carTypesList; }
-            set { SetProperty(ref _carTypesList, value); }
+            get { return _routesEnterprisesId; }
+            set { SetProperty(ref (_routesEnterprisesId), value); }
         }
-
-        private int _carsEnterprisesId;
-        public int CarsEnterprisesId
+        private string _routesName;
+        public string RoutesName
         {
-            get { return _carsEnterprisesId; }
-            set { SetProperty(ref (_carsEnterprisesId), value); }
+            get { return _routesName; }
+            set { SetProperty(ref (_routesName), value); }
         }
-        private int _carsCarTypesId;
-        public int CarsCarTypesId
+        private string _routesNomer;
+        public string RoutesNomer
         {
-            get { return _carsCarTypesId; }
-            set { SetProperty(ref (_carsCarTypesId), value); }
+            get { return _routesNomer; }
+            set { SetProperty(ref (_routesNomer), value); }
         }
-        private string _carsINomer;
-        public string CarsINomer
+        private string _routesLineName;
+        public string RoutesLineName
         {
-            get { return _carsINomer; }
-            set { SetProperty(ref (_carsINomer), value); }
+            get { return _routesLineName; }
+            set { SetProperty(ref (_routesLineName), value); }
         }
-        private string _carsSNomer;
-        public string CarsSNomer
+        private string _routesBackName;
+        public string RoutesBackName
         {
-            get { return _carsSNomer; }
-            set { SetProperty(ref (_carsSNomer), value); }
+            get { return _routesBackName; }
+            set { SetProperty(ref (_routesBackName), value); }
         }
 
         public DelegateCommand<object> CloseGuidesPopupCommand { get; set; }
@@ -63,13 +62,14 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            int sres = SessionsHelper.GuidesItemSave(new Cars()
+            int sres = SessionsHelper.GuidesItemSave(new Routes()
             {
-                Id = _carsId,
-                INomer = CarsINomer,
-                SNomer = CarsSNomer,
-                CarTypesId = CarsCarTypesId,
-                EnterprisesId = CarsEnterprisesId
+                Id = _routesId,
+                Name = RoutesName,
+                Nomer = RoutesNomer,
+                LineName = RoutesLineName,
+                BackName = RoutesBackName,
+                EnterprisesId = RoutesEnterprisesId
             });
             RaiseRequestClose(new DialogResult(sres > 0 ? ButtonResult.OK : ButtonResult.No));
         }
@@ -85,14 +85,15 @@ namespace mteGuides.ViewModels
             Title = "Транспортное средство / " + (parameters.Count > 0 ? "Изменение" : "Создание");
             if (parameters.Count > 0)
             {
-                var value = parameters.GetValue<Cars>("Item");
+                var value = parameters.GetValue<Routes>("Item");
                 if (value != null)
                 {
-                    _carsId = value.Id;
-                    CarsINomer = value.INomer;
-                    CarsSNomer = value.SNomer;
-                    CarsEnterprisesId = value.EnterprisesId;
-                    CarsCarTypesId = value.CarTypesId;
+                    _routesId = value.Id;
+                    RoutesName = value.Name;
+                    RoutesNomer = value.Nomer;
+                    RoutesLineName = value.LineName;
+                    RoutesBackName = value.BackName;
+                    RoutesEnterprisesId = value.EnterprisesId;
                 }
             }
         }
@@ -111,16 +112,13 @@ namespace mteGuides.ViewModels
             set { SetProperty(ref (_title), value); }
         }
 
-        public GuidesCarsViewModel(IRegionManager RegionManager)
+        public GuidesRoutesViewModel(IRegionManager RegionManager)
         {
             ApplyGuidesPopupCommand = new DelegateCommand<object>(ApplyGuidesPopup);
             CloseGuidesPopupCommand = new DelegateCommand<object>(CloseGuidesPopup);
 
             EnterprisesList = new ObservableCollection<Enterprises>();
             EnterprisesList.AddRange(SessionsHelper.GetEnterprisesList());
-
-            CarTypesList = new ObservableCollection<CarTypes>();
-            CarTypesList.AddRange(SessionsHelper.GetCarTypesList());
         }
     }
 }

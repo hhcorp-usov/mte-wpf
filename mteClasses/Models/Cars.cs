@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +9,7 @@ using System.Windows.Data;
 
 namespace mteModels.Models
 {
-    public class Cars : IDataList
+    public class Cars : IGuidesItem
     {
         [Key]
         public int Id { get; set; }
@@ -19,30 +20,26 @@ namespace mteModels.Models
 
         public virtual Enterprises Enterprises { get; set; }
         public virtual CarTypes CarTypes { get; set; }
-    }
 
-    public static class CarsHelper
-    {
-        public static ObservableCollection<DataGridColumn> GetDataGridColumns()
+        public int DeleteItem(DatabaseContext _dbContext)
         {
-            ObservableCollection<DataGridColumn> res = new ObservableCollection<DataGridColumn>();
-            res.Add(new DataGridTextColumn() { Header = "ID", Width = 50, Binding = new Binding() { Path = new PropertyPath("Id") } });
-            res.Add(new DataGridTextColumn() { Header = "INOMER", Width = 100, Binding = new Binding() { Path = new PropertyPath("INomer") } });
-            res.Add(new DataGridTextColumn() { Header = "SNOMER", Width = 100, Binding = new Binding() { Path = new PropertyPath("SNomer") } });
-            res.Add(new DataGridTextColumn() { Header = "CARTYPE", Width = new DataGridLength(100, DataGridLengthUnitType.Star), Binding = new Binding() { Path = new PropertyPath("CarTypes.Name") } });
-            res.Add(new DataGridTextColumn() { Header = "ENTERPRISE", Width = new DataGridLength(100, DataGridLengthUnitType.Star), Binding = new Binding() { Path = new PropertyPath("Enterprises.Name") } });
-            return res;
-        }
-
-        public static IReadOnlyList<IDataList> GetDataGridItems(DatabaseContext _dbContext)
-        {
-            return _dbContext.Cars.OrderBy(o => o.Id).ToList();
-        }
-
-        public static int DeleteDataGridItem(DatabaseContext _dbContext, Cars SelectedItem)
-        {
-            Cars _item = _dbContext.Cars.Where(w => w.Id == SelectedItem.Id).SingleOrDefault();
+            var _item = _dbContext.Cars.Find(this.Id);
             _dbContext.Cars.Remove(_item);
+            return _dbContext.SaveChanges();
+        }
+
+        public int SaveItem(DatabaseContext _dbContext)
+        {
+            if (this.Id > 0)
+            {
+                var _item = _dbContext.Cars.Find(this.Id);
+                _item.INomer = this.INomer;
+                _item.EnterprisesId = this.EnterprisesId;
+                _item.CarTypesId = this.CarTypesId;
+                _item.SNomer = this.SNomer;
+                _dbContext.Entry(_item).State = EntityState.Modified;
+            }
+            else _dbContext.Cars.Add(this);
             return _dbContext.SaveChanges();
         }
     }

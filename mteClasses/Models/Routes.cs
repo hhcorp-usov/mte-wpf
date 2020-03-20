@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace mteModels.Models
 {
-    public class Points : IGuidesItem
+    public class Routes : IGuidesItem
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int PointTypesId { get; set; }
+        public string Nomer { get; set; }
+        public string BackName { get; set; }
+        public string LineName { get; set; }
+        public int EnterprisesId { get; set; }
 
-        public virtual PointTypes PointTypes { get; set; }
+        public virtual Enterprises Enterprises { get; set; }
 
         public int DeleteItem(DatabaseContext _dbContext)
         {
-            Points _item = _dbContext.Points.Find(this.Id);
-            _dbContext.Points.Remove(_item);
+            var _item = _dbContext.Routes.Find(this.Id);
+            _dbContext.Routes.Remove(_item);
             return _dbContext.SaveChanges();
         }
 
@@ -32,12 +32,15 @@ namespace mteModels.Models
         {
             if (this.Id > 0)
             {
-                Points _item = _dbContext.Points.Find(this.Id);
+                var _item = _dbContext.Routes.Find(this.Id);
                 _item.Name = this.Name;
-                _item.PointTypesId = this.PointTypesId;
+                _item.Nomer= this.Nomer;
+                _item.BackName = this.BackName;
+                _item.LineName = this.LineName;
+                _item.EnterprisesId = this.EnterprisesId;
                 _dbContext.Entry(_item).State = EntityState.Modified;
             }
-            else _dbContext.Points.Add(this);
+            else _dbContext.Routes.Add(this);
             return _dbContext.SaveChanges();
         }
     }

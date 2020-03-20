@@ -82,6 +82,7 @@ namespace mte
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<mteGuides.mteGuidesModule>();
+            moduleCatalog.AddModule<mteWayBills.mteWayBillsModule>();
         }
     }
 }

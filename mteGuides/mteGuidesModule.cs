@@ -26,6 +26,7 @@ namespace mteGuides
             containerRegistry.RegisterDialog<GuidesCars>();
             containerRegistry.RegisterDialog<GuidesPointTypes>();
             containerRegistry.RegisterDialog<GuidesPoints>();
+            containerRegistry.RegisterDialog<GuidesRoutes>();
         }
     }
 }

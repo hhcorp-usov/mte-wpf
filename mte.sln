@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mteModels", "mteClasses\mte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mteGuides", "mteGuides\mteGuides.csproj", "{138459D2-D773-46C2-B35F-C52519051E82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mteWayBills", "mteWayBills\mteWayBills.csproj", "{D175110F-94A1-4C7D-8763-D8DDF9674487}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{138459D2-D773-46C2-B35F-C52519051E82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{138459D2-D773-46C2-B35F-C52519051E82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{138459D2-D773-46C2-B35F-C52519051E82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D175110F-94A1-4C7D-8763-D8DDF9674487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D175110F-94A1-4C7D-8763-D8DDF9674487}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D175110F-94A1-4C7D-8763-D8DDF9674487}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D175110F-94A1-4C7D-8763-D8DDF9674487}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

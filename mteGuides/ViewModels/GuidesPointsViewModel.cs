@@ -45,7 +45,7 @@ namespace mteGuides.ViewModels
         public DelegateCommand<object> ApplyGuidesPopupCommand { get; set; }
         private void ApplyGuidesPopup(object Parameters)
         {
-            int sres = SessionsHelper.PointsSaveChanges(new Points()
+            int sres = SessionsHelper.GuidesItemSave(new Points()
             {
                 Id = _pointsId,
                 Name = PointsName,
